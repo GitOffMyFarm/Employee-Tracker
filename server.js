@@ -33,13 +33,10 @@ const mainMenu = () => {
                 'View Employees by Role',
                 'View Employees by Manager',
                 'Add Employee',
-                //Remove Employee
                 'Add Department',
                 'Update Employee Role',
-                //Update Employee Manager
                 'View All Roles',
                 'Add Role',
-                //Remove Role
                 'Exit',
             ],
         })
@@ -336,6 +333,7 @@ const addRole = () => {
         .then(async function (response) {
             const newRole = response.newRole;
             const newRoleDept = response.newRoleDept;
+            const newRoleSalary = response.newRoleSalary;
 
             const roleID = await query('SELECT id FROM departments WHERE ?', {
                 name: newRoleDept,
@@ -343,6 +341,7 @@ const addRole = () => {
 
             await query('INSERT INTO roles SET ?', {
                 title: newRole,
+                salary: newRoleSalary,
                 dept_id: roleID[0].id,
             });
 
@@ -350,8 +349,6 @@ const addRole = () => {
             mainMenu();
         });
 };
-
-//Update functions
 
 const updateRole = () => {
     inquirer
